@@ -2897,6 +2897,12 @@ export type RecallRequest = {
    * List of fact types to recall: 'world', 'experience', 'observation'. Defaults to world and experience if not specified.
    */
   types?: Array<string> | null;
+  /**
+   * Prefer Observations
+   *
+   * When recalling raw facts ('world'/'experience') together with 'observation', drop any raw fact that an observation in the results was consolidated from, so the observation supersedes it and you don't get duplicate content. The freed slots are backfilled with the next results, keeping the result count at the requested budget. Enabled by default; set to false to return raw facts even when an observation already covers them. No effect unless 'observation' and at least one raw type are both requested.
+   */
+  prefer_observations?: boolean;
   budget?: Budget;
   /**
    * Max Tokens
