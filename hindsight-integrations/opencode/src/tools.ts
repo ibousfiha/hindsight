@@ -50,7 +50,10 @@ export function createTools(
       await client.retain(bankId, args.content, {
         context: args.context || config.retainContext,
         tags: config.retainTags.length ? config.retainTags : undefined,
-        metadata: Object.keys(config.retainMetadata).length ? config.retainMetadata : undefined,
+        metadata: {
+          user_id: process.env["HINDSIGHT_USER_ID"] || "anonymous",
+          ...(Object.keys(config.retainMetadata).length ? config.retainMetadata : {}),
+        },
       });
       return "Memory stored successfully.";
     },

@@ -184,9 +184,11 @@ export function createHooks(
       documentId,
       context: config.retainContext,
       tags: config.retainTags.length ? config.retainTags : undefined,
-      metadata: Object.keys(config.retainMetadata).length
-        ? { ...config.retainMetadata, session_id: sessionId }
-        : { session_id: sessionId },
+      metadata: {
+        session_id: sessionId,
+        user_id: process.env["HINDSIGHT_USER_ID"] || "anonymous",
+        ...(Object.keys(config.retainMetadata).length ? config.retainMetadata : {}),
+      },
       async: true,
     });
   }
